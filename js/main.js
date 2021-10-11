@@ -69,7 +69,7 @@ const getRandomElementsSlice = (elements) => {
 
 const data = [];
 // eslint-disable-next-line id-length
-for (let i = 0; i <= 9; i++) {
+for (let i = 0; i < 10; i++) {
   const location = {
     lat: getRandomIntInclusiveFloat(35.65000, 35.70000, 5),
     lng: getRandomIntInclusiveFloat(139.70000, 139.80000, 5),
@@ -77,11 +77,11 @@ for (let i = 0; i <= 9; i++) {
 
   data.push({
     author: {
-      avatar: `img/avatars/user${  i < 10 ? '0' : ''   }${i + 1  }.png`,
+      avatar: `img/avatars/user${i < 10 ? '0' : ''}${i + 1}.png`,
     },
     offer: {
       title: 'Заголовок предложения',
-      address: `${location.lat  }, ${  location.lng}`,
+      address: `${location.lat}, ${location.lng}`,
       price: getRandomIntInclusive(1,1000),
       type: getRandomElement(TYPES),
       rooms: getRandomIntInclusive(1,8),
