@@ -4,3 +4,4 @@ import './ad-form.js';
 import './map.js';
 import './setup.js';
 import './display-ads.js';
+import './popup.js';
