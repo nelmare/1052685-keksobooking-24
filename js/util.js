@@ -20,13 +20,13 @@ const getRandomIntInclusiveFloat = (min, max, floatCommaNumber) => {
 
 export {getRandomIntInclusiveFloat};
 
-const declOfNum = (n, textForms) => {
-  n = Math.abs(n) % 100;
-  const n1 = n % 10;
-  if (n > 10 && n < 20) { return textForms[2]; }
-  if (n1 > 1 && n1 < 5) { return textForms[1]; }
-  if (n1 === 1) { return textForms[0]; }
-  return textForms[2];
+const adjustNounsToNumber = (numberForNoun, textFormsToNumber) => {
+  numberForNoun = Math.abs(numberForNoun) % 100;
+  const numberMod = numberForNoun % 10;
+  if (numberForNoun > 10 && numberForNoun < 20) { return textFormsToNumber[2]; }
+  if (numberMod > 1 && numberMod < 5) { return textFormsToNumber[1]; }
+  if (numberMod === 1) { return textFormsToNumber[0]; }
+  return textFormsToNumber[2];
 };
 
-export {declOfNum};
+export {adjustNounsToNumber};

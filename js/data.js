@@ -80,5 +80,14 @@ for (let i = 0; i < 10; i++) {
     location: location,
   });
 }
-
 export {data};
+
+const type = {
+  'flat': 'квартира',
+  'bungalow': 'бунгало',
+  'house': 'дом',
+  'palace': 'дворец',
+  'hotel': 'отель',
+};
+
+export {type};
