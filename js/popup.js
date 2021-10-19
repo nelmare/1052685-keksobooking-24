@@ -52,6 +52,9 @@ data.forEach(({author, offer}) => {
     popupFeaturesItem.textContent = feature;
     popupFeaturesList.append(popupFeaturesItem);
   });
+  if (!popupFeaturesList.textContent) {
+    popupFeaturesList.remove();
+  }
   const popupDescription = adItem.querySelector('.popup__description');
   if (offer.description) {
     popupDescription.textContent = offer.description;
