@@ -43,20 +43,14 @@ data.forEach(({author, offer}) => {
   } else {
     popupTime.remove();
   }
-
   const popupFeaturesList = adItem.querySelector('.popup__features');
   popupFeaturesList.innerHTML = '';
-  const popupFeaturesListFragment = document.createDocumentFragment();
-  offer.features.forEach(() => {
-    if (offer.features) {
-      const popupFeaturesItem = document.createElement('li');
-      popupFeaturesItem.classList.add('popup__feature');
-      popupFeaturesItem.classList.add(`popup__feature--${offer.feature}`);
-      popupFeaturesItem.textContent = offer.feature;
-      popupFeaturesListFragment.append(popupFeaturesItem);
-    } else {
-      popupFeaturesList.remove();
-    }
+  offer.features.forEach((feature) => {
+    const popupFeaturesItem = document.createElement('li');
+    popupFeaturesItem.classList.add('popup__feature');
+    popupFeaturesItem.classList.add(`popup__feature--${feature}`);
+    popupFeaturesItem.textContent = feature;
+    popupFeaturesList.append(popupFeaturesItem);
   });
   const popupDescription = adItem.querySelector('.popup__description');
   if (offer.description) {
@@ -65,12 +59,18 @@ data.forEach(({author, offer}) => {
     popupDescription.remove();
   }
   const popupPhotos = adItem.querySelector('.popup__photos');
-  if (offer.photos) {
-    popupPhotos.textContent = offer.photos.join(', ');
-  } else {
-    popupPhotos.remove();
-  }
+  popupPhotos.innerHTML = '';
+  offer.photos.forEach((photo) => {
+    const popupPhoto = document.createElement('img');
+    popupPhoto.classList.add('popup__photo');
+    popupPhoto.src = photo;
+    popupPhotos.append(popupPhoto);
+  });
   const popupAvatar = adItem.querySelector('.popup__avatar');
-  popupAvatar.src = author.avatar;
+  if (author.avatar) {
+    popupAvatar.src = author.avatar;
+  } else {
+    popupAvatar.remove();
+  }
   adsDisplayList.appendChild(adItem);
 });
