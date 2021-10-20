@@ -19,3 +19,14 @@ const getRandomIntInclusiveFloat = (min, max, floatCommaNumber) => {
 };
 
 export {getRandomIntInclusiveFloat};
+
+const adjustNounsToNumber = (numberForNoun, textFormsToNumber) => {
+  numberForNoun = Math.abs(numberForNoun) % 100;
+  const numberMod = numberForNoun % 10;
+  if (numberForNoun > 10 && numberForNoun < 20) { return textFormsToNumber[2]; }
+  if (numberMod > 1 && numberMod < 5) { return textFormsToNumber[1]; }
+  if (numberMod === 1) { return textFormsToNumber[0]; }
+  return textFormsToNumber[2];
+};
+
+export {adjustNounsToNumber};
