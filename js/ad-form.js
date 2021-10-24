@@ -1,10 +1,7 @@
-const adTitleInput = document.querySelector('#title');
-const adPriceInput = document.querySelector('#price');
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_PRICE_LENGTH = 1000000;
-const adRoomNumberSelect = document.querySelector('#room_number');
-const adCapacitySelect = document.querySelector('#capacity');
+
 const capacity = {
   NULL: 3,
   ONE: 2,
@@ -30,8 +27,12 @@ const roomsCapacity = {
     default: 0,
   },
 };
+const adTitleInput = document.querySelector('#title');
+const adPriceInput = document.querySelector('#price');
+const adRoomNumberSelect = document.querySelector('#room_number');
+const adCapacitySelect = document.querySelector('#capacity');
 
-adTitleInput.addEventListener('input', () => {
+const onTitleInputFill = () => {
   const valueLengthTitle = adTitleInput.value.length;
 
   if (valueLengthTitle < MIN_TITLE_LENGTH) {
@@ -42,9 +43,11 @@ adTitleInput.addEventListener('input', () => {
     adTitleInput.setCustomValidity('');
   }
   adTitleInput.reportValidity();
-});
+};
 
-adPriceInput.addEventListener('input', () => {
+adTitleInput.addEventListener('input', onTitleInputFill);
+
+const onPriceInputFill = () => {
   const valueLengthPrice = adPriceInput.value.length;
 
   if (valueLengthPrice > MAX_PRICE_LENGTH) {
@@ -53,7 +56,9 @@ adPriceInput.addEventListener('input', () => {
     adPriceInput.setCustomValidity('');
   }
   adPriceInput.reportValidity();
-});
+};
+
+adPriceInput.addEventListener('input', onPriceInputFill);
 
 const disableOption = (option) => {
   option.disabled = true;
