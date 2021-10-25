@@ -2,7 +2,7 @@ const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_PRICE_LENGTH = 1000000;
 
-const capacity = {
+const Capacity = {
   NULL: 3,
   ONE: 2,
   TWO: 1,
@@ -68,7 +68,7 @@ const enableOption = (select, option) =>  {
   select[option].disabled = false;
 };
 
-const syncCapacity = (evt) => {
+const onRoomNumberSelectChange = (evt) => {
   const room = evt.target.value;
   const allowedGuests = roomsCapacity[room].allowed;
   const enabledGuests = adCapacitySelect.querySelectorAll('option:not([disabled])');
@@ -77,4 +77,4 @@ const syncCapacity = (evt) => {
   adCapacitySelect.value = roomsCapacity[room].default;
 };
 
-adRoomNumberSelect.addEventListener('change', syncCapacity);
+adRoomNumberSelect.addEventListener('change', onRoomNumberSelectChange);
