@@ -1,4 +1,5 @@
 import {doFormInactive} from './util.js';
+import {doFormActive} from './util.js';
 
 const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');

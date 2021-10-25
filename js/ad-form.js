@@ -11,19 +11,19 @@ const Capacity = {
 
 const roomsCapacity = {
   1: {
-    allowed: [capacity.ONE],
+    allowed: [Capacity.ONE],
     default: 1,
   },
   2: {
-    allowed: [capacity.ONE, capacity.TWO],
+    allowed: [Capacity.ONE, Capacity.TWO],
     default: 2,
   },
   3: {
-    allowed: [capacity.ONE, capacity.TWO, capacity.THREE],
+    allowed: [Capacity.ONE, Capacity.TWO, Capacity.THREE],
     default: 3,
   },
   100: {
-    allowed: [capacity.NULL],
+    allowed: [Capacity.NULL],
     default: 0,
   },
 };
