@@ -30,3 +30,23 @@ const adjustNounsToNumber = (numberForNoun, textFormsToNumber) => {
 };
 
 export {adjustNounsToNumber};
+
+const doFormInactive = (form, disableClass) => {
+  const elementsOfForm = form.children;
+  form.classList.add(disableClass);
+  for (let i = 0; i < elementsOfForm.length; i++) {
+    elementsOfForm[i].disabled = true;
+  }
+};
+
+export {doFormInactive};
+
+const doFormActive = (form, disableClass) => {
+  const elementsOfForm = form.children;
+  form.classList.remove(disableClass);
+  for (let i = 0; i < elementsOfForm.length; i++) {
+    elementsOfForm[i].disabled = false;
+  }
+};
+
+export {doFormActive};
