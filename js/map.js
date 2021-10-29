@@ -6,12 +6,12 @@ import {data} from './data.js';
 import {type} from './data.js';
 import {adjustNounsToNumber} from './util.js';
 
-const adPinMarkerLocation = {
+const MainMarkerLocation = {
   lat: 35.68950,
   lng: 139.69171,
 };
 
-export {adPinMarkerLocation};
+export {MainMarkerLocation};
 
 const map = L.map('map-canvas')
   .on('load', () => {

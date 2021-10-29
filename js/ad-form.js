@@ -1,4 +1,4 @@
-import {adPinMarkerLocation} from './map.js';
+import {MainMarkerLocation} from './map.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -82,7 +82,7 @@ const onRoomNumberSelectChange = (evt) => {
 
 adRoomNumberSelect.addEventListener('change', onRoomNumberSelectChange);
 
-adAddressInput.value = `${adPinMarkerLocation.lat.toFixed(5)}, ${adPinMarkerLocation.lng.toFixed(5)}`;
+adAddressInput.value = `${MainMarkerLocation.lat.toFixed(5)}, ${MainMarkerLocation.lng.toFixed(5)}`;
 
 const updateAddressInputByPin = (adPinLocationAfterMoving) => {
   adAddressInput.value = `${adPinLocationAfterMoving.lat.toFixed(5)}, ${adPinLocationAfterMoving.lng.toFixed(5)}`;
