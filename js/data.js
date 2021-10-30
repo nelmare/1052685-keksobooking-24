@@ -53,9 +53,10 @@ const getRandomElementsSlice = (elements) => {
 };
 
 const data = [];
+let location;
 // eslint-disable-next-line id-length
 for (let i = 1; i <= 10; i++) {
-  const location = {
+  location = {
     lat: getRandomIntInclusiveFloat(35.65000, 35.70000, 5),
     lng: getRandomIntInclusiveFloat(139.70000, 139.80000, 5),
   };
@@ -92,3 +93,6 @@ const type = {
 };
 
 export {type};
+export {location};
+
+// console.log(data);

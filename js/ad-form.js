@@ -1,3 +1,5 @@
+import {MainMarkerLocation} from './map.js';
+
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_PRICE_LENGTH = 1000000;
@@ -31,6 +33,7 @@ const adTitleInput = document.querySelector('#title');
 const adPriceInput = document.querySelector('#price');
 const adRoomNumberSelect = document.querySelector('#room_number');
 const adCapacitySelect = document.querySelector('#capacity');
+const adAddressInput = document.querySelector('#address');
 
 const onTitleInputFill = () => {
   const valueLengthTitle = adTitleInput.value.length;
@@ -78,3 +81,11 @@ const onRoomNumberSelectChange = (evt) => {
 };
 
 adRoomNumberSelect.addEventListener('change', onRoomNumberSelectChange);
+
+adAddressInput.value = `${MainMarkerLocation.lat.toFixed(5)}, ${MainMarkerLocation.lng.toFixed(5)}`;
+
+const updateAddressInputByPin = (adPinLocationAfterMoving) => {
+  adAddressInput.value = `${adPinLocationAfterMoving.lat.toFixed(5)}, ${adPinLocationAfterMoving.lng.toFixed(5)}`;
+};
+
+export {updateAddressInputByPin};
