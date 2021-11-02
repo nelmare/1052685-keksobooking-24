@@ -1,4 +1,5 @@
 // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+const ALERT_SHOW_TIME = 5000;
 
 const getRandomIntInclusive = (min, max)  => {
   min = Math.ceil(min);
@@ -50,3 +51,96 @@ const doFormActive = (form, disableClass) => {
 };
 
 export {doFormActive};
+
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 1000;
+  alertContainer.style.position = 'sticky';
+  alertContainer.style.left = 0;
+  alertContainer.style.bottom = '50%';
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '20px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+};
+
+export {showAlert};
+
+const isEscapeKey = (evt) => {
+  return evt.key === 'Escape';
+};
+
+const successMessageTemplate = document.querySelector('#success')
+  .content
+  .querySelector('.success');
+// const pageBody = document.querySelector('body');
+const successMessageContainer = successMessageTemplate.cloneNode(true);
+
+const showSuccessMessage = () => {
+  document.body.appendChild(successMessageContainer);
+  document.addEventListener('keydown', onMessageEscKeydown);
+  document.addEventListener('click', closeSuccessMessage);
+};
+
+export {showSuccessMessage};
+
+const closeSuccessMessage = () => {
+  successMessageContainer.remove();
+  document.removeEventListener('keydown', onMessageEscKeydown);
+  document.removeEventListener('click', closeSuccessMessage);
+};
+
+// export {isEscapeKey};
+
+
+
+
+
+
+
+const errorMessageTemplate = document.querySelector('#error')
+  .content
+  .querySelector('.error');
+// const pageBody = document.querySelector('body');
+const errorMessageContainer = errorMessageTemplate.cloneNode(true);
+
+const newTryButton = errorMessageContainer.querySelector('.error__button');
+
+const showErrorMessage = () => {
+  document.body.appendChild(errorMessageContainer);
+  document.addEventListener('keydown', onMessageEscKeydown);
+  document.addEventListener('click', closeErrorMessage);
+  newTryButton.addEventListener('click', closeErrorMessage);
+};
+
+export {showErrorMessage};
+
+
+
+const closeErrorMessage = () => {
+  errorMessageContainer.remove();
+  document.removeEventListener('keydown', onMessageEscKeydown);
+  document.removeEventListener('click', closeErrorMessage);
+  newTryButton.removeEventListener('click', closeErrorMessage);
+};
+
+// export {isEscapeKey};
+const onMessageEscKeydown = (evt) => {
+  if (isEscapeKey(evt) && successMessageContainer) {
+    evt.preventDefault();
+    closeSuccessMessage();
+  }
+  if (isEscapeKey(evt) && errorMessageContainer) {
+    evt.preventDefault();
+    closeErrorMessage();
+  }
+};
