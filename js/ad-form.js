@@ -87,9 +87,6 @@ const enableOption = (select, option) =>  {
 const setRoomNumberDefaultGuests = () => {
   if (adRoomNumberSelect[0]) {
     adCapacitySelect.value = 1;
-    // adCapacitySelect[0].disable = true;
-    // adCapacitySelect[1].disable = true;
-    // adCapacitySelect[3].disable = true;
   }
 };
 
@@ -145,11 +142,9 @@ resetButton.addEventListener('click', onResetButtonClearData);
 
 export {adForm, onSubmitClearData};
 
-
 const setUserFormSubmit = (onSuccess) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    // const formData = new FormData(evt.target);
     sendData(
       () => onSuccess(),
       () => showErrorMessage(),

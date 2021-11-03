@@ -1,38 +1,6 @@
-// import {showAlert} from './util.js';
 import {showAlert, showSuccessMessage} from './util.js';
 import {showErrorMessage} from './util.js';
-// import {adForm} from './ad-form.js';
 import {makeAds} from './map.js';
-
-// const setUserFormSubmit = (onSuccess) => {
-//   adForm.addEventListener('submit', (evt) => {
-//     evt.preventDefault();
-//
-//     const formData = new FormData(evt.target);
-//
-//     fetch(
-//       ' https://24.javascript.pages.academy/keksobooking',
-//       {
-//         method: 'POST',
-//         body: formData,
-//       },
-//     )
-//       .then((response) => {
-//         if (response.ok) {
-//           showSuccessMessage();
-//           onSuccess();
-//         } else {
-//           showErrorMessage();
-//         }
-//       })
-//       .catch(() => {
-//         showErrorMessage();
-//       });
-//   });
-// };
-
-// export {setUserFormSubmit};
-
 
 const getData = (onSuccess) => {
   fetch('https://24.javascript.pages.academy/keksobooking/data')

@@ -99,14 +99,6 @@ const closeSuccessMessage = () => {
   document.removeEventListener('click', closeSuccessMessage);
 };
 
-// export {isEscapeKey};
-
-
-
-
-
-
-
 const errorMessageTemplate = document.querySelector('#error')
   .content
   .querySelector('.error');
@@ -124,8 +116,6 @@ const showErrorMessage = () => {
 
 export {showErrorMessage};
 
-
-
 const closeErrorMessage = () => {
   errorMessageContainer.remove();
   document.removeEventListener('keydown', onMessageEscKeydown);
@@ -133,7 +123,6 @@ const closeErrorMessage = () => {
   newTryButton.removeEventListener('click', closeErrorMessage);
 };
 
-// export {isEscapeKey};
 const onMessageEscKeydown = (evt) => {
   if (isEscapeKey(evt) && successMessageContainer) {
     evt.preventDefault();

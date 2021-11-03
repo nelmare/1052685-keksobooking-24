@@ -2,7 +2,6 @@ import {doFormActive} from './util.js';
 import {adForm} from './form.js';
 import {mapFilters} from './form.js';
 import {updateAddressInputByPin} from './ad-form.js';
-// import {data} from './data.js';
 import {type} from './data.js';
 import {adjustNounsToNumber} from './util.js';
 
