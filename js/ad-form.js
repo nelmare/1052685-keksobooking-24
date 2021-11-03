@@ -1,4 +1,6 @@
 import {MainMarkerLocation, returnMainPinLocation, closePopup} from './map.js';
+import {sendData} from './api.js';
+import {showErrorMessage} from './util.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -142,3 +144,18 @@ const onResetButtonClearData = (evt) => {
 resetButton.addEventListener('click', onResetButtonClearData);
 
 export {adForm, onSubmitClearData};
+
+
+const setUserFormSubmit = (onSuccess) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    // const formData = new FormData(evt.target);
+    sendData(
+      () => onSuccess(),
+      () => showErrorMessage(),
+      new FormData(evt.target),
+    );
+  });
+};
+
+export {setUserFormSubmit};
