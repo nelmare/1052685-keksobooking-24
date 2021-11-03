@@ -75,61 +75,6 @@ const showAlert = (message) => {
 
 export {showAlert};
 
-const isEscapeKey = (evt) => {
-  return evt.key === 'Escape';
-};
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const successMessageTemplate = document.querySelector('#success')
-  .content
-  .querySelector('.success');
-// const pageBody = document.querySelector('body');
-const successMessageContainer = successMessageTemplate.cloneNode(true);
-
-const showSuccessMessage = () => {
-  document.body.appendChild(successMessageContainer);
-  document.addEventListener('keydown', onMessageEscKeydown);
-  document.addEventListener('click', closeSuccessMessage);
-};
-
-export {showSuccessMessage};
-
-const closeSuccessMessage = () => {
-  successMessageContainer.remove();
-  document.removeEventListener('keydown', onMessageEscKeydown);
-  document.removeEventListener('click', closeSuccessMessage);
-};
-
-const errorMessageTemplate = document.querySelector('#error')
-  .content
-  .querySelector('.error');
-// const pageBody = document.querySelector('body');
-const errorMessageContainer = errorMessageTemplate.cloneNode(true);
-
-const newTryButton = errorMessageContainer.querySelector('.error__button');
-
-const showErrorMessage = () => {
-  document.body.appendChild(errorMessageContainer);
-  document.addEventListener('keydown', onMessageEscKeydown);
-  document.addEventListener('click', closeErrorMessage);
-  newTryButton.addEventListener('click', closeErrorMessage);
-};
-
-export {showErrorMessage};
-
-const closeErrorMessage = () => {
-  errorMessageContainer.remove();
-  document.removeEventListener('keydown', onMessageEscKeydown);
-  document.removeEventListener('click', closeErrorMessage);
-  newTryButton.removeEventListener('click', closeErrorMessage);
-};
-
-const onMessageEscKeydown = (evt) => {
-  if (isEscapeKey(evt) && successMessageContainer) {
-    evt.preventDefault();
-    closeSuccessMessage();
-  }
-  if (isEscapeKey(evt) && errorMessageContainer) {
-    evt.preventDefault();
-    closeErrorMessage();
-  }
-};
+export {isEscapeKey};

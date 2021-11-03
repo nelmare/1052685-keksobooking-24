@@ -1,5 +1,5 @@
-import {showAlert, showSuccessMessage} from './util.js';
-import {showErrorMessage} from './util.js';
+import {showAlert} from './util.js';
+import {showErrorMessage, showSuccessMessage} from './ad-form.js';
 
 const getData = (onSuccess) => {
   fetch('https://24.javascript.pages.academy/keksobooking/data')

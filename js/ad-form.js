@@ -1,6 +1,6 @@
 import {MainMarkerLocation, returnMainPinLocation} from './map.js';
 import {sendData} from './api.js';
-import {showErrorMessage} from './util.js';
+import {isEscapeKey} from './util.js';
 import {closePopup} from './display-ads.js';
 
 const MIN_TITLE_LENGTH = 30;
@@ -142,6 +142,61 @@ const onResetButtonClearData = (evt) => {
 resetButton.addEventListener('click', onResetButtonClearData);
 
 export {adForm, onSubmitClearData};
+
+const successMessageTemplate = document.querySelector('#success')
+  .content
+  .querySelector('.success');
+const successMessageContainer = successMessageTemplate.cloneNode(true);
+
+const errorMessageTemplate = document.querySelector('#error')
+  .content
+  .querySelector('.error');
+const errorMessageContainer = errorMessageTemplate.cloneNode(true);
+
+const newTryButton = errorMessageContainer.querySelector('.error__button');
+
+const onMessageEscKeydown = (evt) => {
+  if (isEscapeKey(evt) && successMessageContainer) {
+    evt.preventDefault();
+    // eslint-disable-next-line no-use-before-define
+    closeSuccessMessage();
+  }
+  if (isEscapeKey(evt) && errorMessageContainer) {
+    evt.preventDefault();
+    // eslint-disable-next-line no-use-before-define
+    closeErrorMessage();
+  }
+};
+
+const closeSuccessMessage = () => {
+  successMessageContainer.remove();
+  document.removeEventListener('keydown', onMessageEscKeydown);
+  document.removeEventListener('click', closeSuccessMessage);
+};
+
+const showSuccessMessage = () => {
+  document.body.appendChild(successMessageContainer);
+  document.addEventListener('keydown', onMessageEscKeydown);
+  document.addEventListener('click', closeSuccessMessage);
+};
+
+export {showSuccessMessage};
+
+const closeErrorMessage = () => {
+  errorMessageContainer.remove();
+  document.removeEventListener('keydown', onMessageEscKeydown);
+  document.removeEventListener('click', closeErrorMessage);
+  newTryButton.removeEventListener('click', closeErrorMessage);
+};
+
+const showErrorMessage = () => {
+  document.body.appendChild(errorMessageContainer);
+  document.addEventListener('keydown', onMessageEscKeydown);
+  document.addEventListener('click', closeErrorMessage);
+  newTryButton.addEventListener('click', closeErrorMessage);
+};
+
+export {showErrorMessage};
 
 const setUserFormSubmit = (onSuccess) => {
   adForm.addEventListener('submit', (evt) => {
