@@ -1,6 +1,7 @@
-import {MainMarkerLocation, returnMainPinLocation, closePopup} from './map.js';
+import {MainMarkerLocation, returnMainPinLocation} from './map.js';
 import {sendData} from './api.js';
 import {showErrorMessage} from './util.js';
+import {closePopup} from './display-ads.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -103,11 +104,11 @@ const onRoomNumberSelectChange = (evt) => {
 
 adRoomNumberSelect.addEventListener('change', onRoomNumberSelectChange);
 
-adAddressInput.value = `${MainMarkerLocation.lat.toFixed(5)}, ${MainMarkerLocation.lng.toFixed(5)}`;
-
 const updateAddressInputByPin = (adPinLocationAfterMoving) => {
   adAddressInput.value = `${adPinLocationAfterMoving.lat.toFixed(5)}, ${adPinLocationAfterMoving.lng.toFixed(5)}`;
 };
+
+updateAddressInputByPin(MainMarkerLocation);
 
 export {updateAddressInputByPin};
 

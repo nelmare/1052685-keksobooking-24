@@ -8,7 +8,7 @@ import './popup.js';
 import './api.js';
 import {onSubmitClearData, setUserFormSubmit} from './ad-form.js';
 import {getData} from './api.js';
-import {makeAds} from './map.js';
+import {makeAds} from './display-ads.js';
 
 getData((ads) => {
   makeAds(ads);

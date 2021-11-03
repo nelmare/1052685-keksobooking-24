@@ -1,6 +1,5 @@
 import {showAlert, showSuccessMessage} from './util.js';
 import {showErrorMessage} from './util.js';
-import {makeAds} from './map.js';
 
 const getData = (onSuccess) => {
   fetch('https://24.javascript.pages.academy/keksobooking/data')
@@ -12,7 +11,7 @@ const getData = (onSuccess) => {
       }
     })
     .then((ads) => {
-      makeAds(ads);
+      onSuccess(ads);
     })
     .catch((err) => {
       showAlert(err);
