@@ -1,5 +1,7 @@
 import {showAlert} from './util.js';
 import {showErrorMessage, showSuccessMessage} from './ad-form.js';
+// import {storeAds} from './store.js';
+// import {isHousingFilterOptionSelected} from './filter.js';
 
 const getData = (onSuccess) => {
   fetch('https://24.javascript.pages.academy/keksobooking/data')
@@ -11,7 +13,10 @@ const getData = (onSuccess) => {
       }
     })
     .then((ads) => {
+      // storeAds(ads);
       onSuccess(ads);
+      // return ads;
+      // console.log(ads);
     })
     .catch((err) => {
       showAlert(err);
@@ -42,3 +47,4 @@ const sendData = (onSuccess, onFail, body) => {
 };
 
 export {getData, sendData};
+

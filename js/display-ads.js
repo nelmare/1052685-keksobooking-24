@@ -1,10 +1,15 @@
 import {type} from './data.js';
 import {adjustNounsToNumber} from './util.js';
 import {adPinIcon, map} from './map.js';
+// import {filteredAds} from './api.js';
+// import {isHousingFilterOptionSelected} from './filter.js';
+// import {filteredAds} from './api.js';
 
 const similarAdTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
+
+// let filteredAds;
 
 const makeAds = (ads) => {
   ads.forEach(({location: {lat, lng}, offer, author}) => {
@@ -92,6 +97,17 @@ const makeAds = (ads) => {
       popupAvatar.remove();
     }
 
+    const adsFilter = document.querySelector('.map__filters');
+    const housingTypeFilter = adsFilter.querySelector('#housing-type');
+    const housingTypeFilterOption = housingTypeFilter.querySelector('option');
+    let housingType;
+    housingTypeFilter.addEventListener('change', (evt) => {
+      housingType = evt.target.value;
+      housingTypeFilterOption.value = housingType;
+    });
+    const isHousingFilterOptionSelected = (ad) => housingType === ad.type;
+    ads.filter(isHousingFilterOptionSelected);
+
     adPinMarker
       .addTo(map)
       .bindPopup(adItem);
@@ -102,4 +118,11 @@ const closePopup = () => {
   map.closePopup();
 };
 
+const cleanPopup = () => {
+  map.clearLayers();
+};
+
+
 export {makeAds, closePopup};
+
+
