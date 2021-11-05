@@ -97,16 +97,16 @@ const makeAds = (ads) => {
       popupAvatar.remove();
     }
 
-    const adsFilter = document.querySelector('.map__filters');
-    const housingTypeFilter = adsFilter.querySelector('#housing-type');
-    const housingTypeFilterOption = housingTypeFilter.querySelector('option');
-    let housingType;
-    housingTypeFilter.addEventListener('change', (evt) => {
-      housingType = evt.target.value;
-      housingTypeFilterOption.value = housingType;
-    });
-    const isHousingFilterOptionSelected = (ad) => housingType === ad.type;
-    ads.filter(isHousingFilterOptionSelected);
+    // const adsFilter = document.querySelector('.map__filters');
+    // const housingTypeFilter = adsFilter.querySelector('#housing-type');
+    // const housingTypeFilterOption = housingTypeFilter.querySelector('option');
+    // let housingType;
+    // housingTypeFilter.addEventListener('change', (evt) => {
+    //   housingType = evt.target.value;
+    //   housingTypeFilterOption.value = housingType;
+    // });
+    // const isHousingFilterOptionSelected = (ad) => housingType === ad.type;
+    // ads.filter(isHousingFilterOptionSelected);
 
     adPinMarker
       .addTo(map)
@@ -118,9 +118,9 @@ const closePopup = () => {
   map.closePopup();
 };
 
-const cleanPopup = () => {
-  map.clearLayers();
-};
+// const cleanPopup = () => {
+//   map.clearLayers();
+// };
 
 
 export {makeAds, closePopup};

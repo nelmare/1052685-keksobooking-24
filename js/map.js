@@ -2,6 +2,8 @@ import {doFormActive} from './util.js';
 import {adForm} from './form.js';
 import {mapFilters} from './form.js';
 import {updateAddressInputByPin} from './ad-form.js';
+import {getData} from './api.js';
+import {makeAds} from './display-ads.js';
 
 const MainMarkerLocation = {
   lat: 35.68950,
@@ -14,6 +16,13 @@ const map = L.map('map-canvas')
   .on('load', () => {
     doFormActive(adForm, 'ad-form--disabled');
     doFormActive(mapFilters, 'map__filters--disabled');
+
+    // const ADS_COUNT = 10;
+
+    getData((ads) => {
+      // makeAds(ads.slice(0, ADS_COUNT));
+      makeAds(ads);
+    });
   })
   .setView({
     lat: MainMarkerLocation.lat,
