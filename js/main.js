@@ -5,3 +5,13 @@ import './map.js';
 import './setup.js';
 import './display-ads.js';
 import './popup.js';
+import './api.js';
+import {onSubmitClearData, setUserFormSubmit} from './ad-form.js';
+import {getData} from './api.js';
+import {makeAds} from './display-ads.js';
+
+getData((ads) => {
+  makeAds(ads);
+});
+
+setUserFormSubmit(onSubmitClearData);

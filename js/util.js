@@ -1,4 +1,5 @@
 // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+const ALERT_SHOW_TIME = 5000;
 
 const getRandomIntInclusive = (min, max)  => {
   min = Math.ceil(min);
@@ -50,3 +51,30 @@ const doFormActive = (form, disableClass) => {
 };
 
 export {doFormActive};
+
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 1000;
+  alertContainer.style.position = 'sticky';
+  alertContainer.style.left = 0;
+  alertContainer.style.bottom = '50%';
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '20px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+};
+
+export {showAlert};
+
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {isEscapeKey};
