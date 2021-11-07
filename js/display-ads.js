@@ -1,18 +1,15 @@
 import {type} from './data.js';
 import {adjustNounsToNumber} from './util.js';
-import {adPinIcon, map} from './map.js';
-// import {filteredAds} from './api.js';
-// import {isHousingFilterOptionSelected} from './filter.js';
-// import {filteredAds} from './api.js';
+import {adPinIcon, map, markerGroup} from './map.js';
+
+const ADS_COUNT = 10;
 
 const similarAdTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
 
-// let filteredAds;
-
 const makeAds = (ads) => {
-  ads.forEach(({location: {lat, lng}, offer, author}) => {
+  ads.slice(0, ADS_COUNT).forEach(({location: {lat, lng}, offer, author}) => {
     const adPinMarker = L.marker(
       {
         lat: lat,
@@ -97,32 +94,22 @@ const makeAds = (ads) => {
       popupAvatar.remove();
     }
 
-    // const adsFilter = document.querySelector('.map__filters');
-    // const housingTypeFilter = adsFilter.querySelector('#housing-type');
-    // const housingTypeFilterOption = housingTypeFilter.querySelector('option');
-    // let housingType;
-    // housingTypeFilter.addEventListener('change', (evt) => {
-    //   housingType = evt.target.value;
-    //   housingTypeFilterOption.value = housingType;
-    // });
-    // const isHousingFilterOptionSelected = (ad) => housingType === ad.type;
-    // ads.filter(isHousingFilterOptionSelected);
-
     adPinMarker
-      .addTo(map)
+      .addTo(markerGroup)
       .bindPopup(adItem);
   });
 };
+
+export {makeAds};
 
 const closePopup = () => {
   map.closePopup();
 };
 
-// const cleanPopup = () => {
-//   map.clearLayers();
-// };
+export {closePopup};
 
+const cleanMarkers = () => {
+  markerGroup.clearLayers();
+};
 
-export {makeAds, closePopup};
-
-
+export {cleanMarkers};

@@ -1,7 +1,5 @@
 import {showAlert} from './util.js';
-import {onErrorMessageShow, onSuccessMessageShow} from './ad-form.js';
-// import {storeAds} from './store.js';
-// import {isHousingFilterOptionSelected} from './filter.js';
+import {onErrorMessageShow, onSuccessMessageShow} from './form-submit-message.js';
 
 const getData = (onSuccess) => {
   fetch('https://24.javascript.pages.academy/keksobooking/data')
@@ -13,30 +11,7 @@ const getData = (onSuccess) => {
       }
     })
     .then((ads) => {
-      // storeAds(ads);
-      onSuccess(ads)
-    })
-      // return ads;
-      // console.log(ads);
-    .then((data) => {
-      const ADS_COUNT = 10;
-
-      const adsFilter = document.querySelector('.map__filters');
-      const housingTypeFilter = adsFilter.querySelector('#housing-type');
-      const housingTypeFilterOption = housingTypeFilter.querySelector('option');
-      // const housingPriceFilter = adsFilter.querySelector('#housing-price');
-      // const housingRoomsFilter = adsFilter.querySelector('#housing-rooms');
-      // const housingGuestsFilter = adsFilter.querySelector('#housing-guests');
-      // const housingFeaturesFilter = adsFilter.querySelector('#housing-features');
-
-      let housingType;
-      housingTypeFilter.addEventListener('change', (evt) => {
-        housingType = evt.target.value;
-        housingTypeFilterOption.value = housingType;
-      });
-
-      const isHousingFilterOptionSelected = (ad) => housingType === ad.type;
-      const filteredAds = ads.filter(isHousingFilterOptionSelected);
+      onSuccess(ads);
     })
     .catch((err) => {
       showAlert(err);
@@ -66,4 +41,3 @@ const sendData = (onSuccess, onFail, body) => {
 };
 
 export {getData, sendData};
-
