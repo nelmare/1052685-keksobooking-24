@@ -10,7 +10,7 @@ avatarFileChooser.addEventListener('change', () => {
   const file = avatarFileChooser.files[0];
   const fileName = file.name.toLowerCase();
 
-  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  const matches = FILE_TYPES.some((item) => fileName.endsWith(item));
 
   if (matches) {
     avatarPreview.src = URL.createObjectURL(file);
@@ -21,7 +21,7 @@ photoFileChooser.addEventListener('change', () => {
   const file = photoFileChooser.files[0];
   const fileName = file.name.toLowerCase();
 
-  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  const matches = FILE_TYPES.some((item) => fileName.endsWith(item));
 
   if (matches) {
     const housingPhoto = document.createElement('img');
