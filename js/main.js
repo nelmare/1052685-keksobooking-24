@@ -1,7 +1,6 @@
 import './data.js';
 import './form.js';
 import './ad-form.js';
-import './filter.js';
 import './map.js';
 import './display-ads.js';
 import './form-filter-clear.js';
