@@ -2,16 +2,13 @@ import './data.js';
 import './form.js';
 import './ad-form.js';
 import './map.js';
-import './setup.js';
 import './display-ads.js';
-import './popup.js';
+import './form-filter-clear.js';
+import './form-submit-message.js';
 import './api.js';
-import {onSubmitClearData, setUserFormSubmit} from './ad-form.js';
-import {getData} from './api.js';
-import {makeAds} from './display-ads.js';
+import './preview.js';
 
-getData((ads) => {
-  makeAds(ads);
-});
+import {setUserFormSubmit} from './form-submit-message.js';
+import {clearData} from './form-filter-clear.js';
 
-setUserFormSubmit(onSubmitClearData);
+setUserFormSubmit(clearData);

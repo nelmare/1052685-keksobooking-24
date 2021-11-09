@@ -1,13 +1,15 @@
 import {type} from './data.js';
 import {adjustNounsToNumber} from './util.js';
-import {adPinIcon, map} from './map.js';
+import {adPinIcon, map, markerGroup} from './map.js';
+
+const ADS_COUNT = 10;
 
 const similarAdTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
 
 const makeAds = (ads) => {
-  ads.forEach(({location: {lat, lng}, offer, author}) => {
+  ads.slice(0, ADS_COUNT).forEach(({location: {lat, lng}, offer, author}) => {
     const adPinMarker = L.marker(
       {
         lat: lat,
@@ -93,13 +95,21 @@ const makeAds = (ads) => {
     }
 
     adPinMarker
-      .addTo(map)
+      .addTo(markerGroup)
       .bindPopup(adItem);
   });
 };
+
+export {makeAds};
 
 const closePopup = () => {
   map.closePopup();
 };
 
-export {makeAds, closePopup};
+export {closePopup};
+
+const cleanMarkers = () => {
+  markerGroup.clearLayers();
+};
+
+export {cleanMarkers};

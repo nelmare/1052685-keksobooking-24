@@ -1,5 +1,5 @@
 import {showAlert} from './util.js';
-import {showErrorMessage, showSuccessMessage} from './ad-form.js';
+import {showErrorMessage, showSuccessMessage} from './form-submit-message.js';
 
 const getData = (onSuccess) => {
   fetch('https://24.javascript.pages.academy/keksobooking/data')
@@ -28,16 +28,13 @@ const sendData = (onSuccess, onFail, body) => {
   )
     .then((response) => {
       if (response.ok) {
-        showSuccessMessage();
-        onSuccess();
+        onSuccess(showSuccessMessage());
       } else {
-        showErrorMessage();
         onFail();
       }
     })
     .catch(() => {
-      showErrorMessage();
-      onFail();
+      onFail(showErrorMessage());
     });
 };
 

@@ -1,7 +1,5 @@
-import {MainMarkerLocation, returnMainPinLocation} from './map.js';
-import {sendData} from './api.js';
-import {isEscapeKey} from './util.js';
-import {closePopup} from './display-ads.js';
+import {MainMarkerLocation} from './map.js';
+import {adForm} from './form.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -33,21 +31,22 @@ const roomsCapacity = {
   },
 };
 
-const adForm = document.querySelector('.ad-form');
-const adTitleInput = adForm.querySelector('#title');
-const adAddressInput = adForm.querySelector('#address');
-const adHouseType = adForm.querySelector('#type');
-const adPriceInput = adForm.querySelector('#price');
-const adRoomNumberSelect = adForm.querySelector('#room_number');
-const adCapacitySelect = adForm.querySelector('#capacity');
-const adTimeIn = adForm.querySelector('#timein');
-const adTimeOut = adForm.querySelector('#timeout');
-const adFeatures = adForm.querySelectorAll('.features__checkbox');
-const adDescription = adForm.querySelector('#description');
-const adFormPhoto = adForm.querySelector('.ad-form__photo');
-const adPhotos = adFormPhoto.querySelectorAll('#images');
-const adAvatar = adForm.querySelector('#avatar');
-const resetButton = adForm.querySelector('.ad-form__reset');
+const MinPrice = {
+  'bungalow': 0,
+  'hotel': 3000,
+  'flat': 5000,
+  'house': 5000,
+  'palace': 10000,
+};
+
+export const adTitleInput = adForm.querySelector('#title');
+export const adAddressInput = adForm.querySelector('#address');
+export const adHouseType = adForm.querySelector('#type');
+export const adPriceInput = adForm.querySelector('#price');
+export const adRoomNumberSelect = adForm.querySelector('#room_number');
+export const adCapacitySelect = adForm.querySelector('#capacity');
+export const adTimeIn = adForm.querySelector('#timein');
+export const adTimeOut = adForm.querySelector('#timeout');
 
 const onTitleInputFill = () => {
   const valueLengthTitle = adTitleInput.value.length;
@@ -77,6 +76,14 @@ const onPriceInputFill = () => {
 
 adPriceInput.addEventListener('input', onPriceInputFill);
 
+const onHousingTypeInputMinPrice = (evt) => {
+  const houseType = evt.target.value;
+  adPriceInput.setAttribute('min', MinPrice[houseType]);
+  adPriceInput.setAttribute('placeholder', MinPrice[houseType]);
+};
+
+adHouseType.addEventListener('input', onHousingTypeInputMinPrice);
+
 const disableOption = (option) => {
   option.disabled = true;
 };
@@ -93,6 +100,8 @@ const setRoomNumberDefaultGuests = () => {
 
 setRoomNumberDefaultGuests();
 
+export {setRoomNumberDefaultGuests};
+
 const onRoomNumberSelectChange = (evt) => {
   const room = evt.target.value;
   const allowedGuests = roomsCapacity[room].allowed;
@@ -104,6 +113,14 @@ const onRoomNumberSelectChange = (evt) => {
 
 adRoomNumberSelect.addEventListener('change', onRoomNumberSelectChange);
 
+const onTimeInTimeOutSelectChange = (evt) => {
+  adTimeIn.value = evt.target.value;
+  adTimeOut.value = evt.target.value;
+};
+
+adTimeIn.addEventListener('change', onTimeInTimeOutSelectChange);
+adTimeOut.addEventListener('change', onTimeInTimeOutSelectChange);
+
 const updateAddressInputByPin = (adPinLocationAfterMoving) => {
   adAddressInput.value = `${adPinLocationAfterMoving.lat.toFixed(5)}, ${adPinLocationAfterMoving.lng.toFixed(5)}`;
 };
@@ -111,102 +128,3 @@ const updateAddressInputByPin = (adPinLocationAfterMoving) => {
 updateAddressInputByPin(MainMarkerLocation);
 
 export {updateAddressInputByPin};
-
-const onSubmitClearData = () => {
-  adAvatar.value = '';
-  adTitleInput.value = '';
-  adAddressInput.value = `${MainMarkerLocation.lat.toFixed(5)}, ${MainMarkerLocation.lng.toFixed(5)}`;
-  adHouseType.value = 'flat';
-  adPriceInput.value = '';
-  adTimeIn.value = '12:00';
-  adTimeOut.value = '12:00';
-  adCapacitySelect.value = '1';
-  adRoomNumberSelect.value = '1';
-  adFeatures.forEach((adFeature) => {
-    adFeature.checked = false;
-  });
-  adDescription.value = '';
-  adPhotos.forEach((adPhoto) => {
-    adPhoto.remove();
-  });
-  returnMainPinLocation();
-  closePopup();
-};
-
-const onResetButtonClearData = (evt) => {
-  evt.preventDefault();
-  onSubmitClearData();
-  setRoomNumberDefaultGuests();
-};
-
-resetButton.addEventListener('click', onResetButtonClearData);
-
-export {adForm, onSubmitClearData};
-
-const successMessageTemplate = document.querySelector('#success')
-  .content
-  .querySelector('.success');
-const successMessageContainer = successMessageTemplate.cloneNode(true);
-
-const errorMessageTemplate = document.querySelector('#error')
-  .content
-  .querySelector('.error');
-const errorMessageContainer = errorMessageTemplate.cloneNode(true);
-
-const newTryButton = errorMessageContainer.querySelector('.error__button');
-
-const onMessageEscKeydown = (evt) => {
-  if (isEscapeKey(evt) && successMessageContainer) {
-    evt.preventDefault();
-    // eslint-disable-next-line no-use-before-define
-    closeSuccessMessage();
-  }
-  if (isEscapeKey(evt) && errorMessageContainer) {
-    evt.preventDefault();
-    // eslint-disable-next-line no-use-before-define
-    closeErrorMessage();
-  }
-};
-
-const closeSuccessMessage = () => {
-  successMessageContainer.remove();
-  document.removeEventListener('keydown', onMessageEscKeydown);
-  document.removeEventListener('click', closeSuccessMessage);
-};
-
-const showSuccessMessage = () => {
-  document.body.appendChild(successMessageContainer);
-  document.addEventListener('keydown', onMessageEscKeydown);
-  document.addEventListener('click', closeSuccessMessage);
-};
-
-export {showSuccessMessage};
-
-const closeErrorMessage = () => {
-  errorMessageContainer.remove();
-  document.removeEventListener('keydown', onMessageEscKeydown);
-  document.removeEventListener('click', closeErrorMessage);
-  newTryButton.removeEventListener('click', closeErrorMessage);
-};
-
-const showErrorMessage = () => {
-  document.body.appendChild(errorMessageContainer);
-  document.addEventListener('keydown', onMessageEscKeydown);
-  document.addEventListener('click', closeErrorMessage);
-  newTryButton.addEventListener('click', closeErrorMessage);
-};
-
-export {showErrorMessage};
-
-const setUserFormSubmit = (onSuccess) => {
-  adForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    sendData(
-      () => onSuccess(),
-      () => showErrorMessage(),
-      new FormData(evt.target),
-    );
-  });
-};
-
-export {setUserFormSubmit};

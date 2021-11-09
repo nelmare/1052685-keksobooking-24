@@ -1,7 +1,15 @@
-import {doFormActive} from './util.js';
-import {adForm} from './form.js';
-import {mapFilters} from './form.js';
+import {debounce, doFormActive} from './util.js';
+import {adForm, adsFilter} from './form.js';
 import {updateAddressInputByPin} from './ad-form.js';
+import {getData} from './api.js';
+import {cleanMarkers, makeAds} from './display-ads.js';
+
+const FIRST_LIMIT_PRICE = 10000;
+const SECOND_LIMIT_PRICE = 50000;
+const LOW_VALUE = 'middle';
+const HIGH_VALUE = 'high';
+const MIDDLE_VALUE = 'middle';
+export const ANY_VALUE = 'any';
 
 const MainMarkerLocation = {
   lat: 35.68950,
@@ -10,15 +18,64 @@ const MainMarkerLocation = {
 
 export {MainMarkerLocation};
 
+export const housingTypeFilter = adsFilter.querySelector('#housing-type');
+export const priceFilter = adsFilter.querySelector('#housing-price');
+export const roomsFilter = adsFilter.querySelector('#housing-rooms');
+export const guestsFilter = adsFilter.querySelector('#housing-guests');
+
+const isHousingTypeOptionSelected = (ad) => housingTypeFilter.value === ANY_VALUE || housingTypeFilter.value === ad.offer.type;
+const isRoomCountOptionSelected = (ad) => roomsFilter.value === ANY_VALUE || roomsFilter.value === ad.offer.rooms.toString();
+const isGuestsOptionSelected = (ad) => guestsFilter.value === ANY_VALUE || guestsFilter.value === ad.offer.guests.toString();
+const isPriceOptionSelected = (ad) => {
+  switch (priceFilter.value) {
+    case MIDDLE_VALUE:
+      return ad.offer.price >= FIRST_LIMIT_PRICE && ad.offer.price <= SECOND_LIMIT_PRICE;
+    case LOW_VALUE:
+      return ad.offer.price < FIRST_LIMIT_PRICE;
+    case HIGH_VALUE:
+      return ad.offer.price > SECOND_LIMIT_PRICE;
+    default:
+      return priceFilter.value === ANY_VALUE;
+  }
+};
+const isFeatureFilterSelected = (ad) => {
+  const featuresSelected = adsFilter.querySelectorAll('input:checked');
+  const selectedValues = Array.from(featuresSelected).map((input) => input.value);
+  const isFeaturesIncluded = selectedValues.every((value) => ad.offer.features && ad.offer.features.includes(value));
+  return isFeaturesIncluded;
+};
+
+const checkFilters = (ad) => isHousingTypeOptionSelected(ad)
+  && isRoomCountOptionSelected(ad)
+  && isGuestsOptionSelected(ad)
+  && isPriceOptionSelected(ad)
+  && isFeatureFilterSelected(ad);
+
+const onGetDataSuccess = (ads) => {
+  doFormActive(adsFilter, 'map__filters--disabled');
+  makeAds(ads);
+  const onFilterChangeAds = () => {
+    cleanMarkers();
+    const filteredAds = ads.filter(checkFilters);
+    makeAds(filteredAds);
+  };
+
+  adsFilter.addEventListener('change', debounce(onFilterChangeAds));
+};
+
 const map = L.map('map-canvas')
   .on('load', () => {
     doFormActive(adForm, 'ad-form--disabled');
-    doFormActive(mapFilters, 'map__filters--disabled');
+    getData(onGetDataSuccess);
   })
   .setView({
     lat: MainMarkerLocation.lat,
     lng: MainMarkerLocation.lng,
   }, 10);
+
+export {map};
+
+export const markerGroup = L.layerGroup().addTo(map);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -58,6 +115,8 @@ const adPinIcon = L.icon({
   iconAnchor: [20, 40],
 });
 
+export {adPinIcon};
+
 const returnMainPinLocation = () => {
   mainPinMarker.setLatLng({
     lat: 35.68951,
@@ -65,4 +124,4 @@ const returnMainPinLocation = () => {
   });
 };
 
-export {adPinIcon, returnMainPinLocation, map};
+export {returnMainPinLocation};
