@@ -1,6 +1,5 @@
 import {debounce, doFormActive} from './util.js';
-import {adForm} from './form.js';
-import {mapFilters} from './form.js';
+import {adForm, adsFilter} from './form.js';
 import {updateAddressInputByPin} from './ad-form.js';
 import {getData} from './api.js';
 import {cleanMarkers, makeAds} from './display-ads.js';
@@ -19,44 +18,42 @@ const MainMarkerLocation = {
 
 export {MainMarkerLocation};
 
-export const adsFilter = document.querySelector('.map__filters');
 export const housingTypeFilter = adsFilter.querySelector('#housing-type');
 export const priceFilter = adsFilter.querySelector('#housing-price');
 export const roomsFilter = adsFilter.querySelector('#housing-rooms');
 export const guestsFilter = adsFilter.querySelector('#housing-guests');
 
+const isHousingTypeOptionSelected = (ad) => housingTypeFilter.value === ANY_VALUE || housingTypeFilter.value === ad.offer.type;
+const isRoomCountOptionSelected = (ad) => roomsFilter.value === ANY_VALUE || roomsFilter.value === ad.offer.rooms.toString();
+const isGuestsOptionSelected = (ad) => guestsFilter.value === ANY_VALUE || guestsFilter.value === ad.offer.guests.toString();
+const isPriceOptionSelected = (ad) => {
+  switch (priceFilter.value) {
+    case MIDDLE_VALUE:
+      return ad.offer.price >= FIRST_LIMIT_PRICE && ad.offer.price <= SECOND_LIMIT_PRICE;
+    case LOW_VALUE:
+      return ad.offer.price < FIRST_LIMIT_PRICE;
+    case HIGH_VALUE:
+      return ad.offer.price > SECOND_LIMIT_PRICE;
+    default:
+      return priceFilter.value === ANY_VALUE;
+  }
+};
+const isFeatureFilterSelected = (ad) => {
+  const featuresSelected = adsFilter.querySelectorAll('input:checked');
+  const selectedValues = Array.from(featuresSelected).map((input) => input.value);
+  const isFeaturesIncluded = selectedValues.every((value) => ad.offer.features && ad.offer.features.includes(value));
+  return isFeaturesIncluded;
+};
+
+const checkFilters = (ad) => isHousingTypeOptionSelected(ad)
+  && isRoomCountOptionSelected(ad)
+  && isGuestsOptionSelected(ad)
+  && isPriceOptionSelected(ad)
+  && isFeatureFilterSelected(ad);
+
 const onGetDataSuccess = (ads) => {
-  doFormActive(mapFilters, 'map__filters--disabled');
+  doFormActive(adsFilter, 'map__filters--disabled');
   makeAds(ads);
-
-  const isHousingTypeOptionSelected = (ad) => housingTypeFilter.value === ANY_VALUE || housingTypeFilter.value === ad.offer.type;
-  const isRoomCountOptionSelected = (ad) => roomsFilter.value === ANY_VALUE || roomsFilter.value === ad.offer.rooms.toString();
-  const isGuestsOptionSelected = (ad) => guestsFilter.value === ANY_VALUE || guestsFilter.value === ad.offer.guests.toString();
-  const isPriceOptionSelected = (ad) => {
-    switch (priceFilter.value) {
-      case MIDDLE_VALUE:
-        return ad.offer.price >= FIRST_LIMIT_PRICE && ad.offer.price <= SECOND_LIMIT_PRICE;
-      case LOW_VALUE:
-        return ad.offer.price < FIRST_LIMIT_PRICE;
-      case HIGH_VALUE:
-        return ad.offer.price > SECOND_LIMIT_PRICE;
-      default:
-        return priceFilter.value === ANY_VALUE;
-    }
-  };
-  const isFeatureFilterSelected = (ad) => {
-    const featuresSelected = adsFilter.querySelectorAll('input:checked');
-    const selectedValues = Array.from(featuresSelected).map((input) => input.value);
-    const isFeaturesIncluded = selectedValues.every((value) => ad.offer.features && ad.offer.features.includes(value));
-    return isFeaturesIncluded;
-  };
-
-  const checkFilters = (ad) => isHousingTypeOptionSelected(ad)
-      && isRoomCountOptionSelected(ad)
-      && isGuestsOptionSelected(ad)
-      && isPriceOptionSelected(ad)
-      && isFeatureFilterSelected(ad);
-
   const onFilterChangeAds = () => {
     cleanMarkers();
     const filteredAds = ads.filter(checkFilters);

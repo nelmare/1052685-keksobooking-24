@@ -10,6 +10,6 @@ import './api.js';
 import './preview.js';
 
 import {setUserFormSubmit} from './form-submit-message.js';
-import {onSubmitClearData} from './form-filter-clear.js';
+import {clearData} from './form-filter-clear.js';
 
-setUserFormSubmit(onSubmitClearData);
+setUserFormSubmit(clearData);

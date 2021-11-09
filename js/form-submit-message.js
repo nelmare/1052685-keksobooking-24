@@ -14,56 +14,57 @@ const errorMessageContainer = errorMessageTemplate.cloneNode(true);
 
 const newTryButton = errorMessageContainer.querySelector('.error__button');
 
-let onSuccessMessageClose = null;
-let onErrorMessageClose = null;
+let successMessageClose = null;
+let errorMessageClose = null;
 
 const onMessageEscKeydown = (evt) => {
-  if (isEscapeKey(evt) && document.contains(successMessageContainer)) {
-    evt.preventDefault();
-    onSuccessMessageClose();
+  if (!isEscapeKey(evt)) {
+    return;
   }
-  if (isEscapeKey(evt) && document.contains(errorMessageContainer)) {
-    evt.preventDefault();
-    onErrorMessageClose();
+  if (document.contains(successMessageContainer)) {
+    successMessageClose();
+  }
+  if (document.contains(errorMessageContainer)) {
+    errorMessageClose();
   }
 };
 
-onSuccessMessageClose = () => {
+successMessageClose = () => {
   successMessageContainer.remove();
   document.removeEventListener('keydown', onMessageEscKeydown);
-  document.removeEventListener('click', onSuccessMessageClose);
+  document.removeEventListener('click', successMessageClose);
 };
 
-const onSuccessMessageShow = () => {
+const showSuccessMessage = () => {
   document.body.appendChild(successMessageContainer);
   document.addEventListener('keydown', onMessageEscKeydown);
-  document.addEventListener('click', onSuccessMessageClose);
+  document.addEventListener('click', successMessageClose);
 };
 
-export {onSuccessMessageShow};
+export {showSuccessMessage};
 
-onErrorMessageClose = () => {
+errorMessageClose = () => {
   errorMessageContainer.remove();
   document.removeEventListener('keydown', onMessageEscKeydown);
-  document.removeEventListener('click', onErrorMessageClose);
-  newTryButton.removeEventListener('click', onErrorMessageClose);
+  document.removeEventListener('click', errorMessageClose);
+  newTryButton.removeEventListener('click', errorMessageClose);
 };
 
-const onErrorMessageShow = () => {
+const showErrorMessage = () => {
   document.body.appendChild(errorMessageContainer);
   document.addEventListener('keydown', onMessageEscKeydown);
-  document.addEventListener('click', onErrorMessageClose);
-  newTryButton.addEventListener('click', onErrorMessageClose);
+  document.addEventListener('click', errorMessageClose);
+  newTryButton.addEventListener('click', errorMessageClose);
 };
 
-export {onErrorMessageShow};
+export {showErrorMessage};
 
 const setUserFormSubmit = (onSuccess) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     sendData(
       () => onSuccess(),
-      () => onErrorMessageShow(),
+      () => showErrorMessage(),
       new FormData(evt.target),
     );
   });

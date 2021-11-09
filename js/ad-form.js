@@ -1,4 +1,5 @@
 import {MainMarkerLocation} from './map.js';
+import {adForm} from './form.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -31,31 +32,13 @@ const roomsCapacity = {
 };
 
 const MinPrice = {
-  NULL: 0,
-  ONE: 3000,
-  TWO: 5000,
-  THREE: 10000,
+  'bungalow': 0,
+  'hotel': 3000,
+  'flat': 5000,
+  'house': 5000,
+  'palace': 10000,
 };
 
-const typeHouseMinPrice = {
-  'bungalow': {
-    minPrice: [MinPrice.NULL],
-  },
-  'hotel': {
-    minPrice: [MinPrice.ONE],
-  },
-  'flat': {
-    minPrice: [MinPrice.TWO],
-  },
-  'house': {
-    minPrice: [MinPrice.TWO],
-  },
-  'palace': {
-    minPrice: [MinPrice.THREE],
-  },
-};
-
-const adForm = document.querySelector('.ad-form');
 export const adTitleInput = adForm.querySelector('#title');
 export const adAddressInput = adForm.querySelector('#address');
 export const adHouseType = adForm.querySelector('#type');
@@ -93,13 +76,13 @@ const onPriceInputFill = () => {
 
 adPriceInput.addEventListener('input', onPriceInputFill);
 
-const onHousingTypeChangeMinPrice = (evt) => {
+const onHousingTypeInputMinPrice = (evt) => {
   const houseType = evt.target.value;
-  adPriceInput.setAttribute('min', typeHouseMinPrice[houseType].minPrice);
-  adPriceInput.setAttribute('placeholder', typeHouseMinPrice[houseType].minPrice);
+  adPriceInput.setAttribute('min', MinPrice[houseType]);
+  adPriceInput.setAttribute('placeholder', MinPrice[houseType]);
 };
 
-adHouseType.addEventListener('input', onHousingTypeChangeMinPrice);
+adHouseType.addEventListener('input', onHousingTypeInputMinPrice);
 
 const disableOption = (option) => {
   option.disabled = true;
