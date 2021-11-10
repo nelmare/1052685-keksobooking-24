@@ -3,7 +3,7 @@ import {adForm} from './form.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
-const MAX_PRICE_LENGTH = 1000000;
+const MAX_PRICE = 1000000;
 
 const Capacity = {
   NULL: 3,
@@ -48,15 +48,21 @@ export const adCapacitySelect = adForm.querySelector('#capacity');
 export const adTimeIn = adForm.querySelector('#timein');
 export const adTimeOut = adForm.querySelector('#timeout');
 
+const showErrorBorder = (input) => input.style.borderColor = 'red';
+const removeErrorBorder = (input) => input.style.borderColor = '';
+
 const onTitleInputFill = () => {
   const valueLengthTitle = adTitleInput.value.length;
 
   if (valueLengthTitle < MIN_TITLE_LENGTH) {
     adTitleInput.setCustomValidity(`Ещё ${MIN_TITLE_LENGTH - valueLengthTitle} симв.`);
+    showErrorBorder(adTitleInput);
   } else if (valueLengthTitle > MAX_TITLE_LENGTH) {
     adTitleInput.setCustomValidity(`Удалите лишние ${valueLengthTitle - MAX_TITLE_LENGTH} симв.`);
+    showErrorBorder(adTitleInput);
   } else {
     adTitleInput.setCustomValidity('');
+    removeErrorBorder(adTitleInput);
   }
   adTitleInput.reportValidity();
 };
@@ -64,11 +70,18 @@ const onTitleInputFill = () => {
 adTitleInput.addEventListener('input', onTitleInputFill);
 
 const onPriceInputFill = () => {
-  const valueLengthPrice = adPriceInput.value.length;
+  const valuePrice = adPriceInput.value;
 
-  valueLengthPrice > MAX_PRICE_LENGTH ?
-    adPriceInput.setCustomValidity(`Цена за ночь не должна превышать ${MAX_PRICE_LENGTH}`) :
+  if (valuePrice > MAX_PRICE) {
+    adPriceInput.setCustomValidity(`Цена за ночь не должна превышать ${MAX_PRICE}`);
+    showErrorBorder(adPriceInput);
+  } else if (valuePrice < MinPrice[adHouseType.value]) {
+    adPriceInput.setCustomValidity(`Цена за ночь не должна быть меньше ${MinPrice[adHouseType.value]}`);
+    showErrorBorder(adPriceInput);
+  } else {
     adPriceInput.setCustomValidity('');
+    removeErrorBorder(adPriceInput);
+  }
   adPriceInput.reportValidity();
 };
 
