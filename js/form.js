@@ -5,4 +5,3 @@ export const adsFilter = document.querySelector('.map__filters');
 
 doFormInactive(adForm, 'ad-form--disabled');
 doFormInactive(adsFilter, 'map__filters--disabled');
-
