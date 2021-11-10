@@ -2,7 +2,7 @@ import {debounce, doFormActive} from './util.js';
 import {adForm, adsFilter} from './form.js';
 import {updateAddressInputByPin} from './ad-form.js';
 import {getData} from './api.js';
-import {cleanMarkers, makeAds} from './display-ads.js';
+import {makeAds, cleanMarkers} from './display-ads.js';
 
 const FIRST_LIMIT_PRICE = 10000;
 const SECOND_LIMIT_PRICE = 50000;
