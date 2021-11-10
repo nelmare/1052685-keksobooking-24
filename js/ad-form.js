@@ -66,11 +66,9 @@ adTitleInput.addEventListener('input', onTitleInputFill);
 const onPriceInputFill = () => {
   const valueLengthPrice = adPriceInput.value.length;
 
-  if (valueLengthPrice > MAX_PRICE_LENGTH) {
-    adPriceInput.setCustomValidity(`Цена за ночь не должна превышать ${MAX_PRICE_LENGTH}`);
-  } else {
+  valueLengthPrice > MAX_PRICE_LENGTH ?
+    adPriceInput.setCustomValidity(`Цена за ночь не должна превышать ${MAX_PRICE_LENGTH}`) :
     adPriceInput.setCustomValidity('');
-  }
   adPriceInput.reportValidity();
 };
 

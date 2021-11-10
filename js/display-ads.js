@@ -21,21 +21,17 @@ const makeAds = (ads) => {
     );
 
     const adItem = similarAdTemplate.cloneNode(true);
-    adItem.querySelector('.popup__title').textContent = offer.title;
     const popupAddress = adItem.querySelector('.popup__text--address');
-    if (offer.address) {
-      popupAddress.textContent = offer.address;
-    } else {
-      popupAddress.remove();
-    }
     const popupPrice = adItem.querySelector('.popup__text--price');
-    if (offer.price) {
-      popupPrice.textContent = `${offer.price} ₽/ночь`;
-    } else {
-      popupPrice.remove();
-    }
-    adItem.querySelector('.popup__type').textContent = type[offer.type];
     const popupCapacity = adItem.querySelector('.popup__text--capacity');
+    const popupFeaturesList = adItem.querySelector('.popup__features');
+    const popupTime = adItem.querySelector('.popup__text--time');
+    const popupDescription = adItem.querySelector('.popup__description');
+    const popupPhotos = adItem.querySelector('.popup__photos');
+    adItem.querySelector('.popup__title').textContent = offer.title;
+    offer.address ? popupAddress.textContent = offer.address : popupAddress.remove();
+    offer.price ? popupPrice.textContent = `${offer.price} ₽/ночь` : popupPrice.remove();
+    adItem.querySelector('.popup__type').textContent = type[offer.type];
     const roomsNumberNoun = adjustNounsToNumber(offer.rooms, ['комната', 'комнаты', 'комнат']);
     const guestsNumberNoun = adjustNounsToNumber(offer.guests, ['гостя', 'гостей', 'гостей']);
     if (offer.rooms && offer.guests) {
@@ -48,13 +44,8 @@ const makeAds = (ads) => {
     } else {
       popupCapacity.remove();
     }
-    const popupTime = adItem.querySelector('.popup__text--time');
-    if (offer.checkin && offer.checkout) {
-      popupTime.textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
-    } else {
+    offer.checkin && offer.checkout ? popupTime.textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}` :
       popupTime.remove();
-    }
-    const popupFeaturesList = adItem.querySelector('.popup__features');
     popupFeaturesList.innerHTML = '';
     if (offer.features) {
       offer.features.forEach((feature) => {
@@ -67,13 +58,7 @@ const makeAds = (ads) => {
     } else {
       popupFeaturesList.remove();
     }
-    const popupDescription = adItem.querySelector('.popup__description');
-    if (offer.description) {
-      popupDescription.textContent = offer.description;
-    } else {
-      popupDescription.remove();
-    }
-    const popupPhotos = adItem.querySelector('.popup__photos');
+    offer.description ? popupDescription.textContent = offer.description : popupDescription.remove();
     popupPhotos.innerHTML = '';
     if (offer.photos) {
       offer.photos.forEach((photo) => {
@@ -88,11 +73,7 @@ const makeAds = (ads) => {
       popupPhotos.remove();
     }
     const popupAvatar = adItem.querySelector('.popup__avatar');
-    if (author.avatar) {
-      popupAvatar.src = author.avatar;
-    } else {
-      popupAvatar.remove();
-    }
+    author.avatar ? popupAvatar.src = author.avatar : popupAvatar.remove();
 
     adPinMarker
       .addTo(markerGroup)
