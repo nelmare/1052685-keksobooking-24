@@ -14,7 +14,7 @@ const getData = (onSuccess) => {
       onSuccess(ads);
     })
     .catch((err) => {
-      showAlert(err);
+      showAlert(err.message);
     });
 };
 

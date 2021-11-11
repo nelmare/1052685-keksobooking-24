@@ -21,7 +21,7 @@ const clearData = () => {
   adForm.reset();
   avatarPreview.setAttribute('src', 'img/muffin-grey.svg');
   adAddressInput.value = `${MainMarkerLocation.lat.toFixed(5)}, ${MainMarkerLocation.lng.toFixed(5)}`;
-  adPriceInput.placeholder = '5000';
+  adPriceInput.placeholder = '1000';
   adCapacitySelect.value = '1';
   adRoomNumberSelect.value = '1';
   adFormPhoto.innerHTML = '';

@@ -1,26 +1,6 @@
 // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 const ALERT_SHOW_TIME = 5000;
 
-const getRandomIntInclusive = (min, max)  => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  if(min < 0 || min >= max) {
-    return false;
-  }
-  return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
-};
-
-export {getRandomIntInclusive};
-
-const getRandomIntInclusiveFloat = (min, max, floatCommaNumber) => {
-  if(min < 0 || min >= max) {
-    return false;
-  }
-  return Number((Math.random() * (max - min) + min).toFixed(floatCommaNumber));
-};
-
-export {getRandomIntInclusiveFloat};
-
 const adjustNounsToNumber = (numberForNoun, textFormsToNumber) => {
   numberForNoun = Math.abs(numberForNoun) % 100;
   const numberMod = numberForNoun % 10;
@@ -52,18 +32,18 @@ const doFormActive = (form, disableClass) => {
 
 export {doFormActive};
 
-const showAlert = (message) => {
+const showAlert = (err) => {
   const alertContainer = document.createElement('div');
-  alertContainer.style.zIndex = 1000;
+  alertContainer.style.zIndex = '1000';
   alertContainer.style.position = 'sticky';
-  alertContainer.style.left = 0;
+  alertContainer.style.left = '0';
   alertContainer.style.bottom = '50%';
-  alertContainer.style.right = 0;
+  alertContainer.style.right = '0';
   alertContainer.style.padding = '10px 3px';
-  alertContainer.style.fontSize = '20px';
+  alertContainer.style.fontSize = '25px';
   alertContainer.style.textAlign = 'center';
   alertContainer.style.backgroundColor = 'red';
-  alertContainer.textContent = message;
+  alertContainer.textContent = err;
 
   document.body.append(alertContainer);
 
@@ -81,7 +61,7 @@ export {isEscapeKey};
 // Функция взята из интернета и доработана
 // Источник - https://www.freecodecamp.org/news/javascript-debounce-example
 
-const debounce = (callback, timeoutDelay = 500) => {
+const makeDebounce = (callback, timeoutDelay) => {
   let timeoutId;
   return (...rest) => {
     clearTimeout(timeoutId);
@@ -89,4 +69,4 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-export {debounce};
+export {makeDebounce};
