@@ -8,8 +8,7 @@ const photoPreviewContainer = document.querySelector('.ad-form__photo');
 const isFileTypeMatching = (element) => {
   const file = element.files[0];
   const fileName = file.name.toLowerCase();
-  const matches = FILE_TYPES.some((item) => fileName.endsWith(item));
-  return matches;
+  return FILE_TYPES.some((item) => fileName.endsWith(item));
 };
 
 const getImageSrc = (element, imageContainer) => {

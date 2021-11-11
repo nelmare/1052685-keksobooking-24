@@ -1,4 +1,4 @@
-import {debounce, doFormActive} from './util.js';
+import {makeDebounce, doFormActive} from './util.js';
 import {adForm, adsFilter} from './form.js';
 import {updateAddressInputByPin} from './ad-form.js';
 import {getData} from './api.js';
@@ -38,11 +38,11 @@ const isPriceOptionSelected = (ad) => {
       return priceFilter.value === ANY_VALUE;
   }
 };
+
 const isFeatureFilterSelected = (ad) => {
   const featuresSelected = adsFilter.querySelectorAll('input:checked');
   const selectedValues = Array.from(featuresSelected).map((input) => input.value);
-  const isFeaturesIncluded = selectedValues.every((value) => ad.offer.features && ad.offer.features.includes(value));
-  return isFeaturesIncluded;
+  return selectedValues.every((value) => ad.offer.features && ad.offer.features.includes(value));
 };
 
 const checkFilters = (ad) => isHousingTypeOptionSelected(ad)
@@ -60,7 +60,7 @@ const onGetDataSuccess = (ads) => {
     makeAds(filteredAds);
   };
 
-  adsFilter.addEventListener('change', debounce(onFilterChangeAds));
+  adsFilter.addEventListener('change', makeDebounce(onFilterChangeAds, 500));
 };
 
 const map = L.map('map-canvas')

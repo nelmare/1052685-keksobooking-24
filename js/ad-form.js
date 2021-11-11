@@ -34,7 +34,7 @@ const roomsCapacity = {
 const MinPrice = {
   'bungalow': 0,
   'hotel': 3000,
-  'flat': 5000,
+  'flat': 1000,
   'house': 5000,
   'palace': 10000,
 };
@@ -68,6 +68,14 @@ const onTitleInputFill = () => {
 };
 
 adTitleInput.addEventListener('input', onTitleInputFill);
+
+const setTypeHouseDefaultPrice = () => {
+  if (adHouseType[1]) {
+    adPriceInput.placeholder = 1000;
+  }
+};
+
+setTypeHouseDefaultPrice();
 
 const onPriceInputFill = () => {
   const valuePrice = adPriceInput.value;
